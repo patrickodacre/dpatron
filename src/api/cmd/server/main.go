@@ -57,6 +57,50 @@ func main() {
 		json.NewEncoder(w).Encode(resp)
 	})
 
+	r.Post("/creators/{account}/bookmarks", func(w http.ResponseWriter, r *http.Request) {
+		req := dpatronapi.BookmarkRequest{}
+
+		err := json.NewDecoder(r.Body).Decode(&req)
+
+		if err != nil {
+			fmt.Println("Error creating a bookmark", err)
+
+			w.WriteHeader(http.StatusInternalServerError)
+
+			return
+		}
+
+		if req.Account == "" {
+			w.WriteHeader(http.StatusBadRequest)
+
+			json.NewEncoder(w).Encode(struct{ Message string }{"Account required."})
+
+			return
+		}
+
+		db.Update(func(tx *bolt.Tx) error {
+			b := tx.Bucket([]byte("Creators"))
+
+			data, err := json.Marshal(dpatronapi.Creator{Account: req.Account, Bookmarks: req.Bookmarks})
+
+			if err != nil {
+				log.Fatalf("Error putting bookmark", err)
+				return err
+			}
+
+			err = b.Put([]byte(req.Account), []byte(data))
+
+			if err != nil {
+				log.Fatalf("Error putting bookmark", err)
+				return err
+			}
+
+			return err
+		})
+
+		w.WriteHeader(http.StatusOK)
+	})
+
 	r.Get("/creators", func(w http.ResponseWriter, r *http.Request) {
 
 		creators := []dpatronapi.Creator{}

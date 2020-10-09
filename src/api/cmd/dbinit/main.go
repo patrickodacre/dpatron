@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	var dbPath = flag.String("dbpath", "my.db", "Path to Database")
+	var dbPath = flag.String("dbpath", "main.db", "Path to Database")
 
 	db, err := bolt.Open(*dbPath, 0600, nil)
 	if err != nil {

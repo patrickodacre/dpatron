@@ -114,14 +114,14 @@ func main() {
 			data, err := json.Marshal(dpatronapi.Creator{Account: req.Account})
 
 			if err != nil {
-				log.Fatalf("Error putting tag", err)
+				log.Fatalf("Error putting creator", err)
 				return err
 			}
 
 			err = b.Put([]byte(req.Account), []byte(data))
 
 			if err != nil {
-				log.Fatalf("Error putting tag", err)
+				log.Fatalf("Error putting creator", err)
 				return err
 			}
 

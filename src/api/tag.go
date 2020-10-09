@@ -5,6 +5,6 @@ func GetPermittedTags() []string {
 	return []string{
 		"personal",
 		"blockchain",
-		"travel",
+		"programming",
 	}
 }

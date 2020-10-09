@@ -40,7 +40,7 @@ func main() {
 
 			tag := strings.ToLower(t)
 
-			err = b.Put(tag, true)
+			err = b.Put([]byte(tag), []byte("true"))
 
 			if err != nil {
 				log.Fatalf("Error putting tag", err)

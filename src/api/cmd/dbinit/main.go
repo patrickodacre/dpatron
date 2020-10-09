@@ -54,7 +54,7 @@ func main() {
 	fmt.Println("Success: adding tags")
 
 	db.Update(func(tx *bolt.Tx) error {
-		bucketName := "Bookmarks"
+		bucketName := "Creators"
 		_, err := tx.CreateBucket([]byte(bucketName))
 		if err != nil {
 			return fmt.Errorf("Error: create bucket: %s", err)
